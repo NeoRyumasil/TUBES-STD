@@ -11,4 +11,6 @@ int main()
     createListDokter(lDokter);
     createListPasien(lPasien);
     createListRelasi(lRelasi);
+
+    //ALVIN GANTENG
 }
