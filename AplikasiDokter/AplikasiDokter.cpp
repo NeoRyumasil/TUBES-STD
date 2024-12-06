@@ -324,8 +324,36 @@ void deleteAfterRelasi(listRelasi &lRelasi, adrRelasi prec, adrRelasi aRelasi){
 }
 
 // Function melakukan searching element data
-adrDokter searchElementDokter(listDokter lDokter, string namaDokter);
-adrPasien searchElementPasien(listPasien lPasien, string namaPasien);
+adrDokter searchElementDokter(listDokter lDokter, string namaDokter){
+    /*
+        I.S Terdefinisi list dokter yang mungkin kosong, dan nama dokter yang akan dicari
+        F.S Mengembalikan address yang berisi informasi tentang dokter yang dicari
+    */
+
+    // Pencarian menggunakan penelusuran mundur
+    adrDokter searcher = last(lDokter);
+
+    while(info(searcher).namaDokter != namaDokter && searcher != nullptr){
+        searcher = prev(searcher);
+    }
+
+    return searcher;
+}
+
+adrPasien searchElementPasien(listPasien lPasien, string namaPasien){
+    /*
+        I.S Terdefinisi list Pasien yang mungkin kosong dan nama pasien yang akan dicari
+        F.S Mengembalikan address yang berisi informasi tentang pasien yang dicari
+    */
+
+    adrPasien searcher = first(lPasien);
+
+    while(info(searcher).namaPasien != namaPasien && searcher != nullptr){
+        searcher = next(searcher);
+    }
+
+    return searcher;
+}
 
 // Procedure insert data
 void insertDataDokter(listDokter &lDokter);
