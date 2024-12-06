@@ -11,6 +11,8 @@
 #define first(L) ((L).first)
 #define last(L) ((L).last)
 
+using namespace std;
+
 // define struct info pada list Dokter dan Pasien
 typedef struct infoDokter infotypeDokter;
 typedef struct infoPasien infotypePasien;
