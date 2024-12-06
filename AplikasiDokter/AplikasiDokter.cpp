@@ -144,39 +144,184 @@ void deleteFirstDokter(listDokter &lDokter, adrDokter aDokter){
      }
 }
 
+// Procedure delete Element Dokter
+void deleteFirstDokter(listDokter &lDokter, adrDokter aDokter){
+    /*
+        I.S Terdefinisi lisr dokter yang mungkin kosong
+        F.S Elemen Pertama dalam list dokter terhapus
+    */
+
+     if (isEmptyDokter(lDokter)){
+        cout << "List Dokter Kosong" << endl;
+     } else {
+        if (first(lDokter) != last(lDokter)){
+            first(lDokter) = next(aDokter);
+            next(aDokter) = nullptr;
+            prev(first(lDokter)) = nullptr;
+        } else {
+            first(lDokter) = nullptr;
+            last(lDokter) = nullptr;
+        }
+     }
+}
+
 void deleteLastDokter(listDokter &lDokter, adrDokter aDokter){
     /*
         I.S Terdefinisi list dokter yang mungkin Kosong
         F.S Elemen Terakhir dalam list dokter terhapus
     */
-    adrDokter last = first(lDokter);
 
     if(isEmptyDokter(lDokter)){
-        cout << "List Kosong" << endl;
+        cout << "List Dokter Kosong" << endl;
     } else {
-        if(next(first(lDokter)) = nullptr){
-            aDokter = first(lDokter);
+        if(first(lDokter) != last(lDokter)){
+            aDokter = last(lDokter);
+            last(lDokter) = prev(last(lDokter));
+            prev(aDokter) = nullptr;
+            next(last(lDokter)) = nullptr;
+        } else {
             first(lDokter) = nullptr;
+            last(lDokter) = nullptr;
+        }
+    }
+}
+
+void deleteAfterDokter(listDokter &lDokter, adrDokter prec, adrDokter aDokter){
+    /*
+        I.S Terdefinisi list dokter yang mungkin kosong dan elemen tertentu sebagai prec
+        F.S Next dari elemen prec dalam list dokter akan terhapus
+    */
+
+    if(isEmptyDokter(lDokter)){
+        cout << "List Dokter Kosong" << endl;
+    } else {
+        aDokter = next(prec);
+        next(prec) = next(aDokter);
+        prev(next(aDokter)) = prec;
+        prev(aDokter) = nullptr;
+        next(aDokter) = nullptr;
+    }
+}
+
+// Procedure delete Element Pasien
+void deleteFirstPasien(listPasien &lPasien, adrPasien aPasien){
+    /*
+        I.S Terdefinisi lisr Pasien yang mungkin kosong
+        F.S Elemen Pertama dalam list pasien terhapus
+    */
+
+     if (isEmptyPasien(lPasien)){
+        cout << "List Pasien Kosong" << endl;
+     } else {
+        if (next(first(lPasien)) == nullptr){
+            aPasien = first(lPasien);
+            first(lPasien) = nullptr;
+        } else {
+            aPasien = first(lPasien);
+            first(lPasien) = next(aPasien);
+            next(aPasien) = nullptr;
+        }
+     }
+}
+
+void deleteLastPasien(listPasien &lPasien, adrPasien aPasien){
+    /*
+        I.S Terdefinisi list Pasien yang mungkin Kosong
+        F.S Elemen Terakhir dalam list Pasien terhapus
+    */
+
+    adrPasien last = first(lPasien);
+
+    if(isEmptyPasien(lPasien)){
+        cout << "List Pasien Kosong" << endl;
+    } else {
+        if(next(first(lPasien)) = nullptr){
+            aPasien = first(lPasien);
+            first(lPasien) = nullptr;
         } else {
             while(next(next(last))!= nullptr){
                 last = next(last);
             }
-            aDokter = next(last);
+            aPasien = next(last);
             next(last) = nullptr;
         }
     }
 }
-void deleteAfterDokter(listDokter &lDokter, adrDokter prec, adrDokter aDokter);
 
-// Procedure delete Element Pasien
-void deleteFirstPasien(listPasien &lPasien, adrPasien aPasien);
-void deleteLastPasien(listPasien &lPasien, adrPasien aPasien);
-void deleteAfterPasien(listPasien &lPasien, adrPasien prec, adrPasien aPasien);
+void deleteAfterPasien(listPasien &lPasien, adrPasien prec, adrPasien aPasien){
+     /*
+        I.S Terdefinisi list pasien yang mungkin kosong dan elemen tertentu sebagai prec
+        F.S Next dari elemen prec dalam list pasien akan terhapus
+    */
+
+    if(isEmptyPasien(lPasien)){
+        cout << "List Pasien Kosong" << endl;
+    } else {
+        aPasien = next(prec);
+        next(prec) = next(aPasien);
+        next(aPasien) = nullptr;
+    }
+}
 
 // Procedure delete Element Relasi
-void deleteFirstRelasi(listRelasi &lRelasi, adrRelasi aRelasi);
-void deleteLastRelasi(listRelasi &lRelasi, adrRelasi aRelasi);
-void deleteAfterRelasi(listRelasi &lRelasi, adrRelasi prec, adrRelasi aRelasi);
+void deleteFirstRelasi(listRelasi &lRelasi, adrRelasi aRelasi){
+    /*
+        I.S Terdefinisi list Relasi yang mungkin kosong
+        F.S Elemen Pertama dalam list relasi terhapus
+    */
+
+     if (isEmptyRelasi(lRelasi)){
+        cout << "List Relasi Kosong" << endl;
+     } else {
+        if (next(first(lRelasi)) == nullptr){
+            aRelasi = first(lRelasi);
+            first(lRelasi) = nullptr;
+        } else {
+            aRelasi = first(lRelasi);
+            first(lRelasi) = next(aRelasi);
+            next(aRelasi) = nullptr;
+        }
+     }
+}
+
+void deleteLastRelasi(listRelasi &lRelasi, adrRelasi aRelasi){
+    /*
+        I.S Terdefinisi list Relasi yang mungkin Kosong
+        F.S Elemen Terakhir dalam list Relasi terhapus
+    */
+
+    adrRelasi last = first(lRelasi);
+
+    if(isEmptyRelasi(lRelasi)){
+        cout << "List Relasi Kosong" << endl;
+    } else {
+        if(next(first(lRelasi)) = nullptr){
+            aRelasi = first(lRelasi);
+            first(lRelasi) = nullptr;
+        } else {
+            while(next(next(last))!= nullptr){
+                last = next(last);
+            }
+            aRelasi = next(last);
+            next(last) = nullptr;
+        }
+    }
+}
+
+void deleteAfterRelasi(listRelasi &lRelasi, adrRelasi prec, adrRelasi aRelasi){
+    /*
+        I.S Terdefinisi list Relasi yang mungkin kosong dan elemen tertentu sebagai prec
+        F.S Next dari elemen prec dalam list Relasi akan terhapus
+    */
+
+    if(isEmptyRelasi(lRelasi)){
+        cout << "List Relasi Kosong" << endl;
+    } else {
+        aRelasi = next(prec);
+        next(prec) = next(aRelasi);
+        next(aRelasi) = nullptr;
+    }
+}
 
 // Function melakukan searching element data
 adrDokter searchElementDokter(listDokter lDokter, string namaDokter);
