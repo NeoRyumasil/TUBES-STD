@@ -33,9 +33,9 @@ struct infoDokter{
 // struct infoPasien
 struct infoPasien{
     int noAntrian;
+    int umurPasien;
     string namaPasien;
     string jenisKelamin;
-    string umurPasien;
     string jenisPenyakit;
     string dokterTujuan;
 };
