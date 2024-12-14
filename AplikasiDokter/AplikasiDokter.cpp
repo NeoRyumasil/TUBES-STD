@@ -108,20 +108,104 @@ adrRelasi createNewElementRelasi(){
 
 }
 
+#include "appdok.h"
+
 // Procedure insert Element Dokter
-void insertFirstDokter(listDokter &lDokter, adrDokter aDokter){}
-void insertLastDokter(listDokter &lDokter, adrDokter aDokter);
-void insertAfterDokter(listDokter &lDokter, adrDokter prec, adrDokter aDokter);
+void insertFirstDokter(listDokter &lDokter, adrDokter aDokter) {
+    if ((first(lDokter) == nullptr) && (last(lDokter) == nullptr)) {
+        first(lDokter) = aDokter;
+        last(lDokter) = aDokter;
+    } else {
+        next(aDokter) = first(lDokter);
+        prev(first(lDokter)) = aDokter;
+        first(lDokter) = aDokter;
+    }
+}
+
+void insertLastDokter(listDokter &lDokter, adrDokter aDokter) {
+    if ((first(lDokter) == nullptr) && last(lDokter) == nullptr) {
+        first(lDokter) = aDokter;
+        last(lDokter) = aDokter;
+    } else {
+        prev(aDokter) = last(lDokter);
+        next(prev(aDokter)) = aDokter;
+        last(lDokter) = aDokter;
+    }
+}
+
+void insertAfterDokter(listDokter &lDokter, adrDokter prec, adrDokter aDokter) {
+    if ((first(lDokter) == nullptr) && (last(lDokter) == nullptr)) {
+        cout << "Error, List kosong!" << endl;
+    } else if (prec == last(lDokter)) {
+        insertLastDokter(lDokter, aDokter);
+    } else {
+        next(aDokter) = next(prec);
+        prev(aDokter) = prec;
+        prev(next(prec)) = aDokter;
+        next(prec) = aDokter;
+    }
+}
 
 // Procedure insert Element Pasien
-void insertFirstPasien(listPasien &lPasien, adrPasien aPasien);
-void insertLastPasien(listPasien &lPasien, adrPasien aPasien);
-void insertAfterPasien(listPasien &lPasien, adrPasien prec, adrPasien aPasien);
+void insertFirstPasien(listPasien &lPasien, adrPasien aPasien) {
+    if (first(lPasien) == NULL) {
+        first(lPasien) = aPasien;
+    } else {
+        next(aPasien) = first(lPasien);
+        first(lPasien) = aPasien;
+    }
+}
+
+void insertLastPasien(listPasien &lPasien, adrPasien aPasien) {
+    adrPasien q = first(lPasien);
+    if (q == nullptr) {
+        first(lPasien) = aPasien;
+    } else {
+        while (next(q) != nullptr) {
+            q = next(q);
+        }
+        next(q) = aPasien;
+    }
+}
+void insertAfterPasien(listPasien &lPasien, adrPasien prec, adrPasien aPasien) {
+    if (prec == nullptr) {
+        cout << "Maaf, prec tidak ditemukan" << endl;
+    } else {
+        next(aPasien) = next(prec);
+        next(prec) = aPasien;
+    }
+}
 
 // Procedure insert Element Relasi
-void insertFirstRelasi(listRelasi &lRelasi, adrRelasi aRelasi);
-void insertLastRelasi(listRelasi &lRelasi, adrRelasi aRelasi);
-void insertAfterRelasi(listRelasi &lRelasi, adrRelasi prec, adrRelasi aRelasi);
+void insertFirstRelasi(listRelasi &lRelasi, adrRelasi aRelasi) {
+    if (first(listRelasi) == nullptr) {
+        first(listRelasi) = aRelasi;
+    } else {
+        next(aRelasi) = first(listRelasi);
+        first(listRelasi) = aRelasi;
+    }
+}
+
+void insertLastRelasi(listRelasi &lRelasi, adrRelasi aRelasi) {
+    adrRelasi r = first(lRelasi)
+    if (r == nullptr) {
+        first(lRelasi) = aRelasi;
+    } else {
+        while (next(r) != nullptr) {
+            r = next(r);
+        }
+        next(r) = aRelasi;
+    }
+}
+void insertAfterRelasi(listRelasi &lRelasi, adrRelasi prec, adrRelasi aRelasi) {
+    if (prec == nullptr) {
+        cout << "Maaf, prec tidak ditemukan" << endl;
+    } else {
+        next(aRelasi) = next(prec);
+        next(prec) = aRelasi;
+    }
+}
+
 
 // Procedure delete Element Dokter
 void deleteFirstDokter(listDokter &lDokter, adrDokter aDokter){
