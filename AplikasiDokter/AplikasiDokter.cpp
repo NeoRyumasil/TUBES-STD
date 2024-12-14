@@ -110,7 +110,11 @@ adrRelasi createNewElementRelasi(){
 
 // Procedure insert Element Dokter
 void insertFirstDokter(listDokter &lDokter, adrDokter aDokter) {
-    if ((first(lDokter) == nullptr) && (last(lDokter) == nullptr)) {
+    /*
+        I.S Terdapat list Dokter yang mungkin kosong dan elemen dokter yang dimasukkan
+        F.S Element dokter dimasukkan ke bagian pertama dalam list dokter
+    */
+    if(isEmptyDokter(lDokter)) {
         first(lDokter) = aDokter;
         last(lDokter) = aDokter;
     } else {
@@ -121,18 +125,26 @@ void insertFirstDokter(listDokter &lDokter, adrDokter aDokter) {
 }
 
 void insertLastDokter(listDokter &lDokter, adrDokter aDokter) {
-    if ((first(lDokter) == nullptr) && last(lDokter) == nullptr) {
+    /*
+        I.S Terdapat list Dokter yang mungkin kosong dan elemen dokter yang dimasukkan
+        F.S Element dokter dimasukkan ke bagian terakhir dalam list dokter
+    */
+    if (isEmptyDokter(lDokter)) {
         first(lDokter) = aDokter;
         last(lDokter) = aDokter;
     } else {
         prev(aDokter) = last(lDokter);
-        next(prev(aDokter)) = aDokter;
+        next(last(lDokter)) = aDokter;
         last(lDokter) = aDokter;
     }
 }
 
 void insertAfterDokter(listDokter &lDokter, adrDokter prec, adrDokter aDokter) {
-    if ((first(lDokter) == nullptr) && (last(lDokter) == nullptr)) {
+    /*
+        I.S Terdapat list Dokter yang akan diisi sebuah elemen
+        F.S Element dokter dimasukkan ke bagian yang ditentukan dalam list
+    */
+    if (isEmptyDokter(lDokter)) {
         cout << "Error, List kosong!" << endl;
     } else if (prec == last(lDokter)) {
         insertLastDokter(lDokter, aDokter);
@@ -146,7 +158,11 @@ void insertAfterDokter(listDokter &lDokter, adrDokter prec, adrDokter aDokter) {
 
 // Procedure insert Element Pasien
 void insertFirstPasien(listPasien &lPasien, adrPasien aPasien) {
-    if (first(lPasien) == NULL) {
+    /*
+        I.S Terdapat list Pasien yang mungkin kosong dan elemen Pasien yang dimasukkan
+        F.S Element Pasien dimasukkan ke bagian pertama dalam list Pasien
+    */
+    if(isEmptyPasien(lPasien)) {
         first(lPasien) = aPasien;
     } else {
         next(aPasien) = first(lPasien);
@@ -155,6 +171,10 @@ void insertFirstPasien(listPasien &lPasien, adrPasien aPasien) {
 }
 
 void insertLastPasien(listPasien &lPasien, adrPasien aPasien) {
+    /*
+        I.S Terdapat list Pasien yang mungkin kosong dan elemen Pasien yang dimasukkan
+        F.S Element Pasien dimasukkan ke bagian terakhir dalam list Pasien
+    */
     adrPasien q = first(lPasien);
     if (q == nullptr) {
         first(lPasien) = aPasien;
@@ -166,6 +186,10 @@ void insertLastPasien(listPasien &lPasien, adrPasien aPasien) {
     }
 }
 void insertAfterPasien(listPasien &lPasien, adrPasien prec, adrPasien aPasien) {
+    /*
+        I.S Terdapat list Pasien yang akan diisi sebuah elemen
+        F.S Element Pasien dimasukkan ke bagian yang ditentukan dalam list
+    */
     if (prec == nullptr) {
         cout << "Maaf, prec tidak ditemukan" << endl;
     } else {
@@ -176,16 +200,24 @@ void insertAfterPasien(listPasien &lPasien, adrPasien prec, adrPasien aPasien) {
 
 // Procedure insert Element Relasi
 void insertFirstRelasi(listRelasi &lRelasi, adrRelasi aRelasi) {
-    if (first(listRelasi) == nullptr) {
-        first(listRelasi) = aRelasi;
+    /*
+        I.S Terdapat list Relasi yang mungkin kosong dan elemen relasi yang dimasukkan
+        F.S Element Relasi dimasukkan ke bagian pertama dalam list relasi
+    */
+    if(isEmptyRelasi(lRelasi)) {
+        first(lRelasi) = aRelasi;
     } else {
-        next(aRelasi) = first(listRelasi);
-        first(listRelasi) = aRelasi;
+        next(aRelasi) = first(lRelasi);
+        first(lRelasi) = aRelasi;
     }
 }
 
 void insertLastRelasi(listRelasi &lRelasi, adrRelasi aRelasi) {
-    adrRelasi r = first(lRelasi)
+     /*
+        I.S Terdapat list Relasi yang mungkin kosong dan elemen relasi  yang dimasukkan
+        F.S Element Relasi dimasukkan ke bagian terakhir dalam list relasi
+    */
+    adrRelasi r = first(lRelasi);
     if (r == nullptr) {
         first(lRelasi) = aRelasi;
     } else {
@@ -196,6 +228,10 @@ void insertLastRelasi(listRelasi &lRelasi, adrRelasi aRelasi) {
     }
 }
 void insertAfterRelasi(listRelasi &lRelasi, adrRelasi prec, adrRelasi aRelasi) {
+    /*
+        I.S Terdapat list Relasi yang akan diisi sebuah elemen
+        F.S Element Relasi dimasukkan ke bagian yang ditentukan dalam list
+    */
     if (prec == nullptr) {
         cout << "Maaf, prec tidak ditemukan" << endl;
     } else {
@@ -438,15 +474,132 @@ adrPasien searchElementPasien(listPasien lPasien, string namaPasien){
 }
 
 // Procedure insert data
-void insertDataDokter(listDokter &lDokter);
-void insertDataPasien(listPasien &lPasien);
+void insertDataDokter(listDokter &lDokter){
+    /*
+        I.S Data dokter belum dimasukkan
+        F.S Data dokter dimasukkan dalam jumlah tertentu
+    */
+
+    int totalDokter = 0;
+    infoDokter dataDokter;
+    adrDokter newDokter;
+    adrDokter explorer = first(lDokter);
+
+    cout << "=======================================================================" << endl;
+    cout << "Masukkan Total Dokter : ";
+    cin >> totalDokter;
+    cout << "=======================================================================" << endl;
+    for (int i = 0; i < totalDokter; i++){
+        cout << "NIP Dokter: ";
+        cin >> dataDokter.NIP;
+        cout << "Nama Dokter: ";
+        cin >> dataDokter.namaDokter;
+        cout << "Jenis Kelamin: ";
+        cin >> dataDokter.jenisKelamin;
+        cout << "Spesialisasi Dokter: ";
+        cin >> dataDokter.spesialisDokter;
+
+        newDokter = createNewElementDokter(dataDokter);
+
+        // Melakukan insert elemen ke dalam list Dokter secara ascending diurutkan melalui NIP
+
+        while (explorer != nullptr && info(explorer).NIP > info(newDokter).NIP){
+            explorer = next(explorer);
+        }
+
+        if (explorer == first(lDokter)){
+            insertFirstDokter(lDokter, newDokter);
+        } else if (explorer == nullptr){
+            insertLastDokter(lDokter, newDokter);
+        } else {
+            insertAfterDokter(lDokter, explorer, newDokter);
+        }
+    }
+}
+
+
+void insertDataPasien(listPasien &lPasien){
+    /*
+        I.S Data Pasien belum dimasukkan
+        F.S Data Pasien dimasukkan
+    */
+
+    infoPasien dataPasien;
+    adrPasien newPasien;
+    adrPasien explorer = first(lPasien);
+
+     cout << "=======================================================================" << endl;
+     cout << "No Antrian: ";
+     cin >> dataPasien.noAntrian;
+     cout << "Nama Pasien: ";
+     cin >> dataPasien.namaPasien;
+     cout << "Umur Pasien: ";
+     cin >> dataPasien.umurPasien;
+     cout << "Jenis Kelamin: ";
+     cin >> dataPasien.jenisKelamin;
+     cout << "Jenis Penyakit: ";
+     cin >> dataPasien.jenisPenyakit;
+     cout << "Dokter yang dituju: ";
+     cin >> dataPasien.dokterTujuan;
+
+     newPasien = createNewElementPasien(dataPasien);
+
+     // Melakukan insert data pasien secara ascending menurut nomor antrian
+     while (explorer != nullptr && info(explorer).noAntrian > info(newPasien).noAntrian){
+        explorer = next(explorer);
+     }
+
+     if (explorer == first(lPasien)){
+        insertFirstPasien(lPasien, newPasien);
+     } else if (explorer == nullptr){
+        insertLastPasien(lPasien, newPasien);
+     } else {
+        insertAfterPasien(lPasien, explorer, newPasien);
+     }
+}
+
 
 // Procedure penghubungan list Dokter dengan list Pasien
 void relationBrige(listDokter &lDokter, listPasien &lPasien, listRelasi &lRelasi);
 
-// Procedure show data list
-void showDataPasien(listPasien lPasien);
-void showDataDokter(listDokter lDokter);
+void showDataPasien(listPasien lPasien){
+    /*
+        I.S Terdapat masukkan list Pasien
+        F.S Menampilkan data seluruh Pasien
+    */
+
+    adrPasien printer = first(lPasien);
+
+    cout << "===================================================================" << endl;
+
+    while (printer != nullptr){
+        cout << "Nomor Antrian: " << info(printer).noAntrian << endl;
+        cout << "Nama Pasien: " << info(printer).namaPasien << endl;
+        cout << "Umur Pasien: " << info(printer).umurPasien << endl;
+        cout << "Jenis Kelamin: " << info(printer).jenisKelamin << endl;
+        cout << "Jenis Penyakit: " << info(printer).jenisPenyakit << endl;
+        cout << "===============================================================" << endl;
+        printer = next(printer);
+    }
+}
+
+void showDataDokter(listDokter lDokter){
+    /*
+        I.S Terdapat masukkan list Dokter
+        F.S Menampilkan data seluruh Dokter
+    */
+
+    adrDokter printer = first(lDokter);
+
+    while (printer != nullptr){
+        cout << "NIP: " << info(printer).NIP << endl;
+        cout << "Nama Dokter: " << info(printer).namaDokter << endl;
+        cout << "Jenis Kelamin: " << info(printer).jenisKelamin << endl;
+        cout << "Spesialisasi : " << info(printer).spesialisDokter << endl;
+        cout << "===============================================================" << endl;
+        printer = next(printer);
+    }
+}
 
 // Procedure untuk Menu
 void mainMenu();
