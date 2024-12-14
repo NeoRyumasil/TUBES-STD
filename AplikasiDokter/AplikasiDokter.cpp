@@ -108,8 +108,6 @@ adrRelasi createNewElementRelasi(){
 
 }
 
-#include "appdok.h"
-
 // Procedure insert Element Dokter
 void insertFirstDokter(listDokter &lDokter, adrDokter aDokter) {
     if ((first(lDokter) == nullptr) && (last(lDokter) == nullptr)) {
