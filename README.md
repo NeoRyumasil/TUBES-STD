@@ -1,6 +1,11 @@
-NOTE :
-- TUGAS BESAR STD MUHAMMAD ALVIN ABABIL dan MUHAMMAD AKBAR PUTRA PAHLAWAN
-- TUGAS BESAR INI BERTEMAKAN DOKTER YANG MENANGANI BANYAK PASIEN
+Tugas Besar Struktur Data
+
+Anggota :
+1. Muhammad Akbar Putra Pahlawan
+2. Muhammad Alvin Ababil
+
+Deskripsi :
+Program multi linked list, dengan tema dokter yang menangani banyak pasien.
 
 NOTE FOR COLLABORATOR :
 - UBAH FILE DENGAN FORMAT .H atau .CPP SAJA
