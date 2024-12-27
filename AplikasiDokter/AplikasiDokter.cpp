@@ -72,7 +72,6 @@ adrDokter createNewElementDokter(infoDokter data){
     info(newElement) = data;
     next(newElement) = nullptr;
     prev(newElement) = nullptr;
-    relasi(newElement) = nullptr;
 
     return newElement;
 }
@@ -87,7 +86,6 @@ adrPasien createNewElementPasien(infoPasien data){
 
     info(newElement) = data;
     next(newElement) = nullptr;
-    relasi(newElement) = nullptr;
 
     return newElement;
 }
@@ -556,11 +554,23 @@ void insertDataPasien(listPasien &lPasien){
      } else {
         insertAfterPasien(lPasien, explorer, newPasien);
      }
+
+    relationBrige(lDokter, lPasien, lRelasi, info(newPasien).dokterTujuan, info(newPasien).namaPasien);
 }
 
-
 // Procedure penghubungan list Dokter dengan list Pasien
-void relationBrige(listDokter &lDokter, listPasien &lPasien, listRelasi &lRelasi);
+void relationBrige(listDokter &lDokter, listPasien &lPasien, listRelasi &lRelasi, string namaDokter, string namaPasien){
+    adrRelasi newRelasi;
+    adrDokter dokterFounder = searchElementDokter(lDokter, namaDokter);
+    adrPasien pasienFounder = searchElementPasien(lPasien, namaPasien);
+
+    newRelasi = createNewElementRelasi();
+    dokter(newRelasi) = dokterFounder;
+    pasien(newRelasi) = pasienFounder;
+
+    insertLastRelasi(lRelasi, newRelasi);
+}
+
 
 void showDataPasien(listPasien lPasien){
     /*
@@ -600,6 +610,98 @@ void showDataDokter(listDokter lDokter){
         printer = next(printer);
     }
 }
+
+void showDetailDataDokter(listDokter lDokter, listRelasi lRelasi, string namaDokter){
+    adrDokter dokterPrinter = searchElementDokter(lDokter, namaDokter);
+    adrRelasi bridge = first(lRelasi);
+
+    if (dokterPrinter != nullptr){
+        cout << "NIP: " << info(dokterPrinter).NIP << endl;
+        cout << "Nama Dokter: " << info(dokterPrinter).namaDokter << endl;
+        cout << "Jenis Kelamin: " << info(dokterPrinter).jenisKelamin << endl;
+        cout << "Spesialisasi : " << info(dokterPrinter).spesialisDokter << endl;
+        cout << "List Pasien yang ditangani : " << endl;
+
+        int listNumber = 0;
+        while(bridge != nullptr){
+            if (info(pasien(bridge)).dokterTujuan == namaDokter){
+                listNumber++;
+                cout << listNumber << ". " << info(pasien(bridge)).namaPasien << endl;
+            }
+            bridge = next(bridge);
+        }
+    } else {
+        cout << "Dokter tidak ditemukan" << endl;
+    }
+    cout << "===============================================================" << endl;
+}
+
+void showDetailDataPasien(listPasien lPasien, string namaPasien){
+    adrPasien printer = searchElementPasien(lPasien, namaPasien);
+
+    if (printer != nullptr){
+        cout << "Nomor Antrian: " << info(printer).noAntrian << endl;
+        cout << "Nama Pasien: " << info(printer).namaPasien << endl;
+        cout << "Umur Pasien: " << info(printer).umurPasien << endl;
+        cout << "Jenis Kelamin: " << info(printer).jenisKelamin << endl;
+        cout << "Jenis Penyakit: " << info(printer).jenisPenyakit << endl;
+        cout << "Dokter Tujuan: " << info(printer).dokterTujuan << endl;
+    } else {
+        cout << "Pasien tidak ditemukan" << endl;
+    }
+
+    cout << "===============================================================" << endl;
+}
+
+void showAllData(listDokter lDokter, listPasien lPasien, listRelasi lRelasi){
+    adrDokter dokterPrinter = first(lDokter);
+    adrPasien pasienPrinter = first(lPasien);
+    adrRelasi relationPrinter = first(lRelasi);
+    int counter = 0;
+
+    cout << "DATA DOKTER" << endl;
+    cout << "===============================================================" << endl;
+    while(relationPrinter != nullptr){
+        counter++;
+        cout << counter << ". ";
+        showDetailDataDokter(lDokter,lRelasi,info(dokter(relationPrinter)).namaDokter);
+        relationPrinter = next(relationPrinter);
+    }
+
+    counter = 0;
+    cout << "DATA PASIEN" << endl;
+    cout << "===============================================================" << endl;
+    while (pasienPrinter != nullptr){
+        counter++;
+        cout << counter << ". ";
+        showDetailDataPasien(lPasien,info(pasienPrinter).namaPasien);
+        pasienPrinter = next(pasienPrinter);
+    }
+}
+
+// Procedure searching data
+void searchDataDokter(listDokter lDokter, listRelasi lRelasi){
+    string namaDokter;
+
+    cout << "Masukkan nama Dokter yang ingin dicari: ";
+    cin >> namaDokter;
+
+    showDetailDataDokter(lDokter, lRelasi, namaDokter);
+}
+
+void searchDataPasien(listPasien lPasien){
+    string namaPasien;
+
+    cout << "Masukkan nama Pasien yang ingin dicari: ";
+    cin >> namaPasien;
+
+    showDetailDataPasien(lPasien, namaPasien);
+}
+
+// Function untuk menghitung data
+int dokterCounter(listDokter lDokter);
+int pasienCounter(listPasien lPasien);
+int countPasienFromDokter(listDokter lDokter, listPasien lPasien, listRelasi lRelasi);
 
 // Procedure untuk Menu
 void mainMenu();
