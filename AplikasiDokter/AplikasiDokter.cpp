@@ -659,13 +659,13 @@ void showAllData(listDokter lDokter, listPasien lPasien, listRelasi lRelasi){
     adrRelasi relationPrinter = first(lRelasi);
     int counter = 0;
 
-    cout << "DATA DOKTER" << endl;
+  cout << "DATA DOKTER" << endl;
     cout << "===============================================================" << endl;
-    while(relationPrinter != nullptr){
+    while(dokterPrinter != nullptr){
         counter++;
         cout << counter << ". ";
-        showDetailDataDokter(lDokter,lRelasi,info(dokter(relationPrinter)).namaDokter);
-        relationPrinter = next(relationPrinter);
+        showDetailDataDokter(lDokter,lRelasi,info(dokterPrinter).namaDokter);
+        dokterPrinter = next(dokterPrinter);
     }
 
     counter = 0;
