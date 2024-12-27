@@ -4,7 +4,6 @@
 #define info(P) P->info
 #define next(P) P->next
 #define prev(P) P->prev
-#define relasi(P) P->relasi
 #define dokter(P) P->dokter
 #define pasien(P) P->pasien
 
@@ -45,14 +44,12 @@ struct elmtListDokter{
     infoDokter info;
     adrDokter prev;
     adrDokter next;
-    adrRelasi relasi;
 };
 
 // struct element List Pasien
 struct elmtListPasien{
     infoPasien info;
     adrPasien next;
-    adrRelasi relasi;
 };
 
 // struct element List Relasi
@@ -137,6 +134,19 @@ void relationBrige(listDokter &lDokter, listPasien &lPasien, listRelasi &lRelasi
 // Procedure show data list
 void showDataPasien(listPasien lPasien);
 void showDataDokter(listDokter lDokter);
+
+void showDetailDataDokter(listDokter lDokter, listRelasi lRelasi, string namaDokter);
+void showDetailDataPasien(listPasien lPasien, string namaPasien);
+void showAllData(listDokter lDokter, listPasien lPasien, listRelasi lRelasi);
+
+// Procedure searching data
+void searchDataDokter(listDokter lDokter, listRelasi lRelasi);
+void searchDataPasien(listPasien lPasien);
+
+// Function untuk menghitung data
+int dokterCounter(listDokter lDokter);
+int pasienCounter(listPasien lPasien);
+int countPasienFromDokter(listDokter lDokter, listPasien lPasien, listRelasi lRelasi);
 
 // Procedure untuk Menu
 void mainMenu();
