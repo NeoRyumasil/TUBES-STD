@@ -745,5 +745,25 @@ void deleteDokter(listDokter &lDokter, listRelasi &lRelasi);
 void deleteAllPasienFromDokter(listDokter &lDokter, listPasien &lPasien, listRelasi &lRelasi);
 
 // Procedure untuk Menu
-int mainMenu();
+int mainMenu(){
+    int output;
+
+    cout << "1. Masukkan Data Dokter" << endl;
+    cout << "2. Masukkan Data Pasien" << endl;
+    cout << "3. Lihat Semua Data Dokter" << endl;
+    cout << "4. Lihat Semua Data Pasien" << endl;
+    cout << "5. Cari data Dokter" << endl;
+    cout << "6. Cari data Pasien" << endl;
+    cout << "7. Hapus data dokter" << endl;
+    cout << "8. Hapus data pasien" << endl;
+    cout << "9. Lihat Semua Data" << endl
+    cout << "0. Exit" << endl;
+    cout << "===============================================================" << endl;
+    cout << "Masukkan Pilihan Menu: ";
+    cin >> output;
+
+    return output;
+
+}
+
 
