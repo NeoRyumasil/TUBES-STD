@@ -8,16 +8,16 @@ int main()
     listDokter lDokter;
     listPasien lPasien;
     listRelasi lRelasi;
+    string namaDokter;
+
 
     createListDokter(lDokter);
     createListPasien(lPasien);
     createListRelasi(lRelasi);
 
     insertDataDokter(lDokter);
+    insertDataPasien(lPasien, lDokter, lRelasi);
 
-    for (int i = 0; i < 2; i++){
-        insertDataPasien(lPasien, lDokter, lRelasi);
-    }
 
     showDataDokter(lDokter);
     cout << endl;
@@ -30,4 +30,12 @@ int main()
     cout << endl;
 
     showAllData(lDokter, lPasien, lRelasi);
+
+    cout << "Total Dokter : " << dokterCounter(lDokter) << endl;
+    cout << "Total Pasien : " << pasienCounter(lPasien) << endl;
+
+    cout << "Masukkan Nama Dokter: ";
+    cin >> namaDokter;
+    cout << "Total Pasien dari dokter " << namaDokter << ": " << countPasienFromDokter(lDokter, lPasien, lRelasi, namaDokter);
 }
+
