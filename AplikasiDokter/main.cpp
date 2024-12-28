@@ -9,33 +9,19 @@ int main()
     listPasien lPasien;
     listRelasi lRelasi;
     string namaDokter;
-
+    int choice;
 
     createListDokter(lDokter);
     createListPasien(lPasien);
     createListRelasi(lRelasi);
 
-    insertDataDokter(lDokter);
-    insertDataPasien(lPasien, lDokter, lRelasi);
+    start:
+         cout << "===============================================================" << endl;
+         cout << "                   APLIKASI PASIEN DAN DOKTER                  " << endl;
+         cout << "===============================================================" << endl;
+         cout << "Total Dokter: " << dokterCounter(lDokter) << endl;
+         cout << "Total Pasien: " << pasienCounter(lPasien) << endl;
+         choice = mainMenu();
 
-
-    showDataDokter(lDokter);
-    cout << endl;
-    showDataPasien(lPasien);
-    cout << endl;
-
-    searchDataDokter(lDokter, lRelasi);
-    cout << endl;
-    searchDataPasien(lPasien);
-    cout << endl;
-
-    showAllData(lDokter, lPasien, lRelasi);
-
-    cout << "Total Dokter : " << dokterCounter(lDokter) << endl;
-    cout << "Total Pasien : " << pasienCounter(lPasien) << endl;
-
-    cout << "Masukkan Nama Dokter: ";
-    cin >> namaDokter;
-    cout << "Total Pasien dari dokter " << namaDokter << ": " << countPasienFromDokter(lDokter, lPasien, lRelasi, namaDokter);
 }
 
