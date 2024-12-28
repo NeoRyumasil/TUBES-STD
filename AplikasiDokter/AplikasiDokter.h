@@ -148,6 +148,11 @@ int dokterCounter(listDokter lDokter);
 int pasienCounter(listPasien lPasien);
 int countPasienFromDokter(listDokter lDokter, listPasien lPasien, listRelasi lRelasi);
 
+// Procedure Delete Some Data
+void deletePasien(listPasien &lPasien, listRelasi &lRelasi);
+void deleteDokter(listDokter &lDokter, listRelasi &lRelasi);
+void deleteAllPasienFromDokter(listDokter &lDokter, listPasien &lPasien, listRelasi &lRelasi);
+
 // Procedure untuk Menu
-void mainMenu();
+int mainMenu();
 #endif // APLIKASIDOKTER_H_INCLUDED
