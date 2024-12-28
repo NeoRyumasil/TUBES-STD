@@ -699,9 +699,45 @@ void searchDataPasien(listPasien lPasien){
 }
 
 // Function untuk menghitung data
-int dokterCounter(listDokter lDokter);
-int pasienCounter(listPasien lPasien);
-int countPasienFromDokter(listDokter lDokter, listPasien lPasien, listRelasi lRelasi);
+int dokterCounter(listDokter lDokter){
+    adrDokter explorer = first(lDokter);
+    int counter = 0;
+
+    while(explorer != nullptr){
+        counter++;
+        explorer = next(explorer);
+    }
+
+    return counter;
+}
+
+int pasienCounter(listPasien lPasien){
+    adrPasien explorer = first(lPasien);
+    int counter = 0;
+
+    while (explorer != nullptr){
+        counter++;
+        explorer = next(explorer);
+    }
+
+    return counter;
+}
+
+int countPasienFromDokter(listDokter lDokter, listPasien lPasien, listRelasi lRelasi, string namaDokter){
+    adrRelasi explorer = first(lRelasi);
+    int counter = 0;
+
+    while(explorer != nullptr){
+        if (info(dokter(explorer)).namaDokter == namaDokter){
+            if(pasien(explorer) != nullptr){
+                counter++;
+            }
+        }
+        explorer = next(explorer);
+    }
+
+    return counter;
+}
 
 // Procedure untuk Menu
 void mainMenu();
