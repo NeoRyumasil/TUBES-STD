@@ -260,27 +260,6 @@ void deleteFirstDokter(listDokter &lDokter, adrDokter aDokter){
      }
 }
 
-// Procedure delete Element Dokter
-void deleteFirstDokter(listDokter &lDokter, adrDokter aDokter){
-    /*
-        I.S Terdefinisi lisr dokter yang mungkin kosong
-        F.S Elemen Pertama dalam list dokter terhapus
-    */
-
-     if (isEmptyDokter(lDokter)){
-        cout << "List Dokter Kosong" << endl;
-     } else {
-        if (first(lDokter) != last(lDokter)){
-            first(lDokter) = next(aDokter);
-            next(aDokter) = nullptr;
-            prev(first(lDokter)) = nullptr;
-        } else {
-            first(lDokter) = nullptr;
-            last(lDokter) = nullptr;
-        }
-     }
-}
-
 void deleteLastDokter(listDokter &lDokter, adrDokter aDokter){
     /*
         I.S Terdefinisi list dokter yang mungkin Kosong
@@ -351,7 +330,7 @@ void deleteLastPasien(listPasien &lPasien, adrPasien aPasien){
     if(isEmptyPasien(lPasien)){
         cout << "List Pasien Kosong" << endl;
     } else {
-        if(next(first(lPasien)) = nullptr){
+        if(next(first(lPasien)) == nullptr){
             aPasien = first(lPasien);
             first(lPasien) = nullptr;
         } else {
@@ -449,7 +428,7 @@ adrDokter searchElementDokter(listDokter lDokter, string namaDokter){
     // Pencarian menggunakan penelusuran mundur
     adrDokter searcher = last(lDokter);
 
-    while(info(searcher).namaDokter != namaDokter && searcher != nullptr){
+    while(searcher != nullptr && info(searcher).namaDokter != namaDokter ){
         searcher = prev(searcher);
     }
 
@@ -464,8 +443,38 @@ adrPasien searchElementPasien(listPasien lPasien, string namaPasien){
 
     adrPasien searcher = first(lPasien);
 
-    while(info(searcher).namaPasien != namaPasien && searcher != nullptr){
+    while(searcher != nullptr && info(searcher).namaPasien != namaPasien ){
         searcher = next(searcher);
+    }
+
+    return searcher;
+}
+
+adrRelasi searchElementRelasiDokter(listRelasi lRelasi, string namaDokter){
+    adrRelasi searcher = first(lRelasi);
+    bool found = false;
+
+    while(searcher != nullptr && !found){
+        if (info(dokter(searcher)).namaDokter == namaDokter){
+            found = true;
+        } else {
+            searcher = next(searcher);
+        }
+    }
+
+    return searcher;
+}
+
+adrRelasi searchElementRelasiPasien(listRelasi lRelasi, string namaPasien){
+    adrRelasi searcher = first(lRelasi);
+    bool found = false;
+
+    while (searcher != nullptr && !found){
+        if (info(pasien(searcher)).namaPasien == namaPasien){
+            found = true;
+        } else {
+            searcher = next(searcher);
+        }
     }
 
     return searcher;
@@ -512,11 +521,13 @@ void insertDataDokter(listDokter &lDokter){
         } else {
             insertAfterDokter(lDokter, explorer, newDokter);
         }
+
+        cout << "=======================================================================" << endl;
     }
 }
 
 
-void insertDataPasien(listPasien &lPasien){
+void insertDataPasien(listPasien &lPasien, listDokter lDokter, listRelasi &lRelasi){
     /*
         I.S Data Pasien belum dimasukkan
         F.S Data Pasien dimasukkan
@@ -525,37 +536,44 @@ void insertDataPasien(listPasien &lPasien){
     infoPasien dataPasien;
     adrPasien newPasien;
     adrPasien explorer = first(lPasien);
+    int TotalPasien = 0;
 
-     cout << "=======================================================================" << endl;
-     cout << "No Antrian: ";
-     cin >> dataPasien.noAntrian;
-     cout << "Nama Pasien: ";
-     cin >> dataPasien.namaPasien;
-     cout << "Umur Pasien: ";
-     cin >> dataPasien.umurPasien;
-     cout << "Jenis Kelamin: ";
-     cin >> dataPasien.jenisKelamin;
-     cout << "Jenis Penyakit: ";
-     cin >> dataPasien.jenisPenyakit;
-     cout << "Dokter yang dituju: ";
-     cin >> dataPasien.dokterTujuan;
+     cout << "Masukkan Total Pasien: ";
+     cin >> TotalPasien;
 
-     newPasien = createNewElementPasien(dataPasien);
+     for (int i = 0; i < TotalPasien; i++){
+        cout << "=======================================================================" << endl;
+        cout << "No Antrian: ";
+        cin >> dataPasien.noAntrian;
+        cout << "Nama Pasien: ";
+        cin >> dataPasien.namaPasien;
+        cout << "Umur Pasien: ";
+        cin >> dataPasien.umurPasien;
+        cout << "Jenis Kelamin: ";
+        cin >> dataPasien.jenisKelamin;
+        cout << "Jenis Penyakit: ";
+        cin >> dataPasien.jenisPenyakit;
+        cout << "Dokter yang dituju: ";
+        cin >> dataPasien.dokterTujuan;
 
-     // Melakukan insert data pasien secara ascending menurut nomor antrian
-     while (explorer != nullptr && info(explorer).noAntrian > info(newPasien).noAntrian){
-        explorer = next(explorer);
+        newPasien = createNewElementPasien(dataPasien);
+
+        // Melakukan insert data pasien secara ascending menurut nomor antrian
+        while (explorer != nullptr && info(explorer).noAntrian > info(newPasien).noAntrian){
+            explorer = next(explorer);
+        }
+
+        if (explorer == first(lPasien)){
+            insertFirstPasien(lPasien, newPasien);
+        } else if (explorer == nullptr){
+            insertLastPasien(lPasien, newPasien);
+        } else {
+            insertAfterPasien(lPasien, explorer, newPasien);
+        }
+        relationBrige(lDokter, lPasien, lRelasi, info(newPasien).dokterTujuan, info(newPasien).namaPasien);
+        cout << "=======================================================================" << endl;
      }
 
-     if (explorer == first(lPasien)){
-        insertFirstPasien(lPasien, newPasien);
-     } else if (explorer == nullptr){
-        insertLastPasien(lPasien, newPasien);
-     } else {
-        insertAfterPasien(lPasien, explorer, newPasien);
-     }
-
-    relationBrige(lDokter, lPasien, lRelasi, info(newPasien).dokterTujuan, info(newPasien).namaPasien);
 }
 
 // Procedure penghubungan list Dokter dengan list Pasien
@@ -571,7 +589,7 @@ void relationBrige(listDokter &lDokter, listPasien &lPasien, listRelasi &lRelasi
     insertLastRelasi(lRelasi, newRelasi);
 }
 
-
+// Procedure show data list
 void showDataPasien(listPasien lPasien){
     /*
         I.S Terdapat masukkan list Pasien
@@ -600,6 +618,8 @@ void showDataDokter(listDokter lDokter){
     */
 
     adrDokter printer = first(lDokter);
+
+    cout << "=======================================================================" << endl;
 
     while (printer != nullptr){
         cout << "NIP: " << info(printer).NIP << endl;
@@ -656,10 +676,9 @@ void showDetailDataPasien(listPasien lPasien, string namaPasien){
 void showAllData(listDokter lDokter, listPasien lPasien, listRelasi lRelasi){
     adrDokter dokterPrinter = first(lDokter);
     adrPasien pasienPrinter = first(lPasien);
-    adrRelasi relationPrinter = first(lRelasi);
     int counter = 0;
 
-  cout << "DATA DOKTER" << endl;
+    cout << "DATA DOKTER" << endl;
     cout << "===============================================================" << endl;
     while(dokterPrinter != nullptr){
         counter++;
@@ -740,9 +759,121 @@ int countPasienFromDokter(listDokter lDokter, listPasien lPasien, listRelasi lRe
 }
 
 // Procedure Delete Some Data
-void deletePasien(listPasien &lPasien, listRelasi &lRelasi);
-void deleteDokter(listDokter &lDokter, listRelasi &lRelasi);
-void deleteAllPasienFromDokter(listDokter &lDokter, listPasien &lPasien, listRelasi &lRelasi);
+void deletePasien(listPasien &lPasien, listRelasi &lRelasi) {
+    adrPasien searcherPasien = first(lPasien);
+    adrPasien deletedPasien, prec = nullptr;
+    adrRelasi searcherRelasi = first(lRelasi);
+    adrRelasi precRelasi, deletedRelasi = nullptr;
+    string namaPasien;
+
+    cout << "Masukkan nama Pasien yang akan dihapus: ";
+    cin >> namaPasien;
+
+   while (searcherRelasi != nullptr) {
+    if (info(pasien(searcherRelasi)).namaPasien == namaPasien) {
+        if (searcherRelasi == first(lRelasi)) {
+            deleteFirstRelasi(lRelasi, deletedRelasi);
+            searcherRelasi = first(lRelasi);
+        } else if (next(searcherRelasi) == nullptr) {
+            deleteLastRelasi(lRelasi, deletedRelasi);
+        } else {
+            deleteAfterRelasi(lRelasi, precRelasi, deletedRelasi);
+            searcherRelasi = next(precRelasi);
+        }
+    } else {
+        precRelasi = searcherRelasi;
+        searcherRelasi = next(searcherRelasi);
+    }
+
+    while (searcherPasien != nullptr) {
+        if (info(searcherPasien).namaPasien == namaPasien) {
+            if (searcherPasien == first(lPasien)) {
+                deleteFirstPasien(lPasien, deletedPasien);
+            } else if (next(searcherPasien) == nullptr) {
+                deleteLastPasien(lPasien, deletedPasien);
+            } else {
+                prec = first(lPasien);
+                while (next(prec) != searcherPasien) {
+                    prec = next(prec);
+                }
+                deleteAfterPasien(lPasien, prec, deletedPasien);
+            }
+            break;
+        }
+        searcherPasien = next(searcherPasien);
+    }
+   }
+}
+
+void deleteDokter(listDokter &lDokter, listRelasi &lRelasi, listPasien &lPasien) {
+    adrDokter searcherDokter = first(lDokter);
+    adrDokter deletedDokter, prec = nullptr;
+    adrRelasi searcherRelasi = first(lRelasi);
+    adrRelasi precRelasi, deletedRelasi = nullptr;
+    adrPasien searcherPasien, deletedPasien, precPasien = first(lPasien);
+    string namaDokter;
+
+    cout << "Masukkan nama Dokter: ";
+    cin >> namaDokter;
+
+    searcherRelasi = first(lRelasi);
+    while (searcherRelasi != nullptr) {
+    if (info(dokter(searcherRelasi)).namaDokter == namaDokter) {
+        if (searcherRelasi == first(lRelasi)) {
+            deleteFirstRelasi(lRelasi, deletedRelasi);
+            searcherRelasi = first(lRelasi);
+        } else if (next(searcherRelasi) == nullptr) {
+            deleteLastRelasi(lRelasi, deletedRelasi);
+        } else {
+            deleteAfterRelasi(lRelasi, precRelasi, deletedRelasi);
+            searcherRelasi = next(precRelasi);
+        }
+    } else {
+        precRelasi = searcherRelasi;
+        searcherRelasi = next(searcherRelasi);
+    }
+
+    while (searcherDokter != nullptr) {
+        if (info(searcherDokter).namaDokter == namaDokter) {
+            if (searcherDokter == first(lDokter)) {
+                deleteFirstDokter(lDokter, deletedDokter);
+            } else if (next(searcherDokter) == nullptr) {
+                deleteLastDokter(lDokter, deletedDokter);
+            } else {
+                prec = first(lDokter);
+                while (next(prec) != searcherDokter) {
+                    prec = next(prec);
+                }
+                deleteAfterDokter(lDokter, prec, deletedDokter);
+            }
+            break;
+        }
+        searcherDokter = next(searcherDokter);
+    }
+
+    searcherPasien = first(lPasien);
+    while (searcherPasien != nullptr) {
+        if (info(searcherPasien).dokterTujuan == namaDokter) {
+            if (searcherPasien == first(lPasien)) {
+                deleteFirstPasien(lPasien, deletedPasien);
+                searcherPasien = first(lPasien);
+            } else if (next(searcherPasien) == nullptr) {
+                deleteLastPasien(lPasien, deletedPasien);
+                searcherPasien = nullptr;
+            } else {
+                precPasien = first(lPasien);
+                while (next(precPasien) != searcherPasien) {
+                    precPasien = next(precPasien);
+                }
+                deleteAfterPasien(lPasien, precPasien, deletedPasien);
+                searcherPasien = next(precPasien);
+            }
+        } else {
+            searcherPasien = next(searcherPasien);
+        }
+    }
+    }
+}
 
 // Procedure untuk Menu
 int mainMenu(){
@@ -756,7 +887,7 @@ int mainMenu(){
     cout << "6. Cari data Pasien" << endl;
     cout << "7. Hapus data dokter" << endl;
     cout << "8. Hapus data pasien" << endl;
-    cout << "9. Lihat Semua Data" << endl
+    cout << "9. Lihat Semua Data" << endl;
     cout << "0. Exit" << endl;
     cout << "===============================================================" << endl;
     cout << "Masukkan Pilihan Menu: ";
@@ -765,5 +896,4 @@ int mainMenu(){
     return output;
 
 }
-
 
