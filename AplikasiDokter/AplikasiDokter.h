@@ -123,18 +123,19 @@ void deleteAfterRelasi(listRelasi &lRelasi, adrRelasi prec, adrRelasi aRelasi);
 // Function melakukan searching element data
 adrDokter searchElementDokter(listDokter lDokter, string namaDokter);
 adrPasien searchElementPasien(listPasien lPasien, string namaPasien);
+adrRelasi searchElementRelasiDokter(listRelasi lRelasi, string namaDokter);
+adrRelasi searchElementRelasiPasien(listRelasi lRelasi, string namaPasien);
 
 // Procedure insert data
 void insertDataDokter(listDokter &lDokter);
-void insertDataPasien(listPasien &lPasien);
+void insertDataPasien(listPasien &lPasien, listDokter lDokter, listRelasi &lRelasi);
 
 // Procedure penghubungan list Dokter dengan list Pasien
-void relationBrige(listDokter &lDokter, listPasien &lPasien, listRelasi &lRelasi);
+void relationBrige(listDokter &lDokter, listPasien &lPasien, listRelasi &lRelasi, string namaDokter, string namaPasien);
 
 // Procedure show data list
 void showDataPasien(listPasien lPasien);
 void showDataDokter(listDokter lDokter);
-
 void showDetailDataDokter(listDokter lDokter, listRelasi lRelasi, string namaDokter);
 void showDetailDataPasien(listPasien lPasien, string namaPasien);
 void showAllData(listDokter lDokter, listPasien lPasien, listRelasi lRelasi);
@@ -146,13 +147,13 @@ void searchDataPasien(listPasien lPasien);
 // Function untuk menghitung data
 int dokterCounter(listDokter lDokter);
 int pasienCounter(listPasien lPasien);
-int countPasienFromDokter(listDokter lDokter, listPasien lPasien, listRelasi lRelasi);
+int countPasienFromDokter(listDokter lDokter, listPasien lPasien, listRelasi lRelasi, string namaDokter);
 
 // Procedure Delete Some Data
 void deletePasien(listPasien &lPasien, listRelasi &lRelasi);
-void deleteDokter(listDokter &lDokter, listRelasi &lRelasi);
-void deleteAllPasienFromDokter(listDokter &lDokter, listPasien &lPasien, listRelasi &lRelasi);
+void deleteDokter(listDokter &lDokter, listRelasi &lRelasi, listPasien &lPasien);
 
 // Procedure untuk Menu
 int mainMenu();
+
 #endif // APLIKASIDOKTER_H_INCLUDED
